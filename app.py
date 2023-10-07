@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'hello manju,come to flask app'
+    return render_template('index.html')
 
 @app.route('/admin')
 def admin():
@@ -13,6 +13,18 @@ def admin():
 @app.route('/home/<string:user>')
 def hello1(user):
     return render_template('userhome.html',user=user)
+
+@app.route('/usignup')
+def signup():
+    return render_template('userSignup.html')
+
+@app.route('/usignupcheck',methods = ['POST','GET'])
+def signupcheck():
+    if request.method == 'POST':
+        data = request.form
+        return render_template('userResult.html',result = data)
+    else:
+        return render_template('index.html')
 
 @app.route('/user/<name>')
 def user(name):
@@ -31,6 +43,10 @@ def login():
         user = request.args.get('nm')
         return redirect(url_for('user',name = user))
 
+@app.route('/marks')
+def marks():
+    dict = {"P":100,"C":96,"M":100}
+    return render_template('userMarks.html',marks = dict)
 
 if __name__ == '__main__':
     app.run(debug = True)

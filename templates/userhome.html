@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script
+      type="text/javascript"
+      src="{{url_for('static',filename='hello.js')}}"
+    ></script>
   </head>
   <body>
     <h1>WELCOME {{user}}</h1>
+    <a href="http://localhost:5000/marks">SEE MARKS</a>
+    <button onclick="sayHello()">Say Hello</button>
   </body>
 </html>
