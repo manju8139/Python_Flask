@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for,request, render_template
 
 app = Flask(__name__)
 
@@ -8,11 +8,11 @@ def home():
 
 @app.route('/admin')
 def admin():
-    return 'welcome to admin page'
+    return render_template('adminhome.html')
 
 @app.route('/home/<string:user>')
 def hello1(user):
-    return 'welcome %s' % user #or 'welcome' + name
+    return render_template('userhome.html',user=user)
 
 @app.route('/user/<name>')
 def user(name):
@@ -20,7 +20,17 @@ def user(name):
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('hello1',user=name))
+    
+# HTTP Methods route for POST and GET
+@app.route('/login',methods = ['POST','GET'])
+def login():
+    if request.method == 'POST':
+        user = request.form['nm']
+        return redirect(url_for('user',name = user))
+    else:
+        user = request.args.get('nm')
+        return redirect(url_for('user',name = user))
 
-        
+
 if __name__ == '__main__':
     app.run(debug = True)
